@@ -2,9 +2,9 @@
 
 ![][banner]
 
-Example of a range [1, 4] - includes integers: 1, 2, 3, and 4.
+Example of a range `[1, 4]` - includes integers: `1, 2, 3`, and `4`.
 
-Example of a list: [[1, 4], [109, 206], [400, 600]]
+Example of a list: `[[1, 4], [109, 206], [400, 600]]`
 
 ## Usage
 

@@ -17,8 +17,8 @@
  * @inner _compact_seq ( <Array> ): [Array[Array]] convert joined sequencies of Numbers into List of Ranges
  * @inner _get_seq     ( <Range> ): [Array]	expands Range to array of Numbers that Range represents
  *
- * @Example of a range [1, 4] - includes integers: 1, 2, 3, and 4.
- * @Example of a list: [1, 4], [109, 206], [400, 600]
+ * @Example of a Range      [1, 4] - includes integers: 1, 2, 3, and 4.
+ * @Example of a Range List [1, 4], [109, 206], [400, 600]
  */
 
 module.exports = class Ranges {
