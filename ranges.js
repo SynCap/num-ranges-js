@@ -145,6 +145,14 @@ module.exports = class Ranges {
 		return this.value;
 	}
 
+	/**
+	 * Prints out the list of ranges
+	 */
+	print() {
+		// eslint-disable-next-line no-console
+		console.log(this.toString());
+	}
+
 	toString() {
 		return this.value && this.value.length
 			? JSON.stringify(this.value)
@@ -152,12 +160,5 @@ module.exports = class Ranges {
 					.replace(/\],\[/g, "] [")
 					.replace(/(?<=\d), *(?=\d)/g, ", ")
 			: "<NULL LIST OF RANGES>";
-	}
-
-	/**
-	 * Prints out the list of ranges
-	 */
-	print() {
-		console.log(this.toString());
 	}
 };

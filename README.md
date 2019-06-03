@@ -24,7 +24,7 @@ Add subrange to the list. Intersected subranges will be joined.
 
 ### .remove(<Range>)
 
-Remove subrange from whole range. Intersected subranges whill be eliminated.
+Remove subrange from whole range. Intersected subranges will be eliminated.
 
 ### .toString()
 
