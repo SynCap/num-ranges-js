@@ -1,5 +1,7 @@
 # Class to work with ranges of Numbers
 
+![][banner]
+
 Example of a range [1, 4] - includes integers: 1, 2, 3, and 4.
 
 Example of a list: [[1, 4], [109, 206], [400, 600]]
@@ -28,7 +30,7 @@ Remove subrange from whole range. Intersected subranges whill be eliminated.
 
 Returns string representation of Ranges list.
 
-###. .print()
+### .print()
 
 Output string representation of ranges list to the console.
 
@@ -117,3 +119,5 @@ yarn && yarn test
   r.print();
   // Should display: [1, 2] [20, 21]
 ```
+
+[banner]: num-ranges-js-github-og-picture.png
