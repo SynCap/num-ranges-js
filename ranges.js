@@ -24,7 +24,7 @@
 module.exports = class Ranges {
 	constructor(value) {
 		if (value && !Array.isArray(value))
-			throw "Initial value must be Array of ranges -- 2 digit length arrays";
+			throw 'Initial value must be Array of ranges -- 2 digit length arrays';
 
 		if (value) value.forEach(x => this.validate(x));
 
@@ -96,7 +96,7 @@ module.exports = class Ranges {
 
 		// свернём последовательности в список диапазонов !!
 		seq.forEach((val, idx) => {
-			if (prevN > val) throw "Sequence is not sorted properly.";
+			if (prevN > val) throw 'Sequence is not sorted properly.';
 			if (!!idx && val > prevN + 1) {
 				acc.push([prevStart, prevN]);
 				prevStart = val;
@@ -157,8 +157,8 @@ module.exports = class Ranges {
 		return this.value && this.value.length
 			? JSON.stringify(this.value)
 					.slice(1, -1)
-					.replace(/\],\[/g, "] [")
-					.replace(/(?<=\d), *(?=\d)/g, ", ")
-			: "<NULL LIST OF RANGES>";
+					.replace(/\],\[/g, '] [')
+					.replace(/(?<=\d), *(?=\d)/g, ', ')
+			: '<NULL LIST OF RANGES>';
 	}
 };
