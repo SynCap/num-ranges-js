@@ -1,7 +1,20 @@
-// Task: Implement a class named 'Ranges'
-
-// Example of a range [1, 4] - includes integers: 1, 2, 3, and 4.
-// Example of a list: [1, 4], [109, 206], [400, 600]
+/**
+ * Numeric ranges list manipulation class Ranges
+ *
+ * @license ICS
+ * @api
+ *
+ * @method add ( <Range> )     : [Array] add Range to list and interssect it with existing
+ * @method print ( none )      : [Array] print stirng representation of list to the console
+ * @method remove ( <Range> )  : [Array] exclude Range from the list, and "punch" ranges if needed
+ * @method validate ( <Range> ): [Array] validate Range to be correct for further use
+ * @method toString ( none )   : [String] convert range list to
+ *
+ * @property list
+ *
+ * @Example of a range [1, 4] - includes integers: 1, 2, 3, and 4.
+ * @Example of a list: [1, 4], [109, 206], [400, 600]
+ */
 
 module.exports = class Ranges {
     constructor(value) {
@@ -30,7 +43,9 @@ module.exports = class Ranges {
         if (range[0] > range[1])
             throw `First element of Range can't be greater than second.
 			Element1: ${range[0]}
-			Element2: ${range[1]}`;
+            Element2: ${range[1]}`;
+
+        return true;
     }
 
     /**
