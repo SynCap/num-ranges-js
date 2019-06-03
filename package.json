@@ -1,0 +1,30 @@
+{
+    "name": "js-ranges",
+    "version": "1.0.0",
+    "description": "Handling numeric ranges with Javascript",
+    "main": "num-ranges.js",
+    "scripts": {
+        "test": "mocha test/**/*.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/SynCap/num-ranges-js.git"
+    },
+    "keywords": [
+        "Javascript",
+        "numeric",
+        "ranges"
+    ],
+    "author": "SynCap",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/SynCap/num-ranges-js/issues"
+    },
+    "homepage": "https://github.com/SynCap/num-ranges-js#readme",
+    "devDependencies": {
+        "chai": "^4.2.0",
+        "mocha": "^6.1.4",
+        "mockery": "^2.1.0",
+        "sinon": "^7.3.2"
+    }
+}
