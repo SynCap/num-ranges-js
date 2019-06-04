@@ -1,8 +1,3 @@
-/* eslint-disable multiline-ternary */
-/* eslint-disable no-console */
-/* eslint-disable sort-keys */
-/* eslint-disable quotes */
-/* eslint-disable key-spacing */
 const pfx = '\x1b[';
 const clr = {
 	RST: 0,
@@ -21,7 +16,6 @@ const clr = {
 	fMGT: 35,
 	fCYN: 36,
 	fWHT: 37,
-	// eslint-disable-next-line no-trailing-spaces
 
 	bBLK: 40,
 	bRED: 41,
@@ -32,9 +26,8 @@ const clr = {
 	bCYN: 46,
 	bWHT: 47
 };
-/* eslint-enable key-spacing */
 
-// eslint-disable-next-line func-names
+/* eslint-disable no-console */
 module.exports = function(acn, obj, sbj) {
 	console.log(`${pfx}${acn ? clr.fCYN : clr.fRED}m`);
 	console.log(obj, `${pfx}${clr.fYLW}m`, sbj, `${pfx}${clr.RST}m`);
