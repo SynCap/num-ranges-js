@@ -52,13 +52,6 @@ module.exports = class Ranges {
 	 * Needs to expand the particular range to series of number that range
 	 * present. That sequencies are used in later caulculations.
 	 *
-	 * Короче, полная победа опыта над разумом: долой математику, долой логику!!
-	 * Однако, такой подход не лишён толики разумного: все манипуляции
-	 * делаются на оптимизированных внтри движков методах работы с данными.
-	 * Так что, еще вопрос -- будет ли проверка диапазонов на чистой логике
-	 * более производительна, чем этот Брут-фАрс, который годится только для
-	 * относительно небольших чисел.
-	 *
 	 * @return [Array]
 	 */
 	_get_seq([since, till]) {
@@ -69,7 +62,7 @@ module.exports = class Ranges {
 	 * Helper function to compact number series into list of
 	 * subsequent ranges of numbers.
 	 * i.e.
-	 * [1,2,3, 7,8,9] becomes [[1,3], [7,0]]
+	 * [1,2,3,7,8,9] becomes [[1,3], [7,0]]
 	 *
 	 * @param      {number}  seq     The sequence
 	 * @return     {Array}   { description_of_the_return_value }
@@ -99,14 +92,45 @@ module.exports = class Ranges {
 	 */
 	add(range) {
 		this.validate(range);
+		const [rangeS, rangeE] = range;
 
-		// впихуем невпихуемое -- развернём диапазоны в натуральные последовательности
-		var tmpSet = new Set(this._get_seq(range));
-		this.value.forEach(subrange => {
-			tmpSet = new Set([...tmpSet, ...this._get_seq(subrange)]);
-		}); // Памяти жрать будееет...
+		if (!this.value.length || this.value[this.value.length - 1][1] < rangeS - 1) {
 
-		return (this.value = this._compact_seq(new Uint32Array(tmpSet).sort()));
+			/**
+			 * List is empty or new Range is far enogh behind last value in the List,
+			 * i.e. they don't contact each other
+			 *
+			 * @Example of contacted Ranges: [1,5] and [5,9], this Ranges
+			 * must be joined to one range [1,9], see below
+			 */
+			this.value.push(range);
+		} else {
+			this.value = this.value.reduce((acc, subsect) => {
+				const [currS, currE] = subsect;
+
+				if (currE < rangeS - 1) {
+
+					/**
+					 * subsection locates before new range and don't contact to it,
+					 * just save subrange
+					 */
+					acc.push(subsect);
+				} else {
+					const [lastS, lastE] = acc[acc.length - 1] || [0, 0];
+					if (lastE > rangeS) {
+						const isCurrentBehindRange = currS > rangeE + 1;
+						acc[acc.length - 1][1] = isCurrentBehindRange ? rangeE : Math.max(currE, rangeE);
+						if (isCurrentBehindRange) acc.push(subsect);
+					} else {
+						acc.push([Math.min(currS, rangeS), Math.max(currE, rangeE)]);
+					}
+				}
+
+				return acc;
+			}, []);
+		}
+
+		return this.value;
 	}
 
 	/**
