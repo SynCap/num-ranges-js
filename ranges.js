@@ -21,7 +21,7 @@
 module.exports = class Ranges {
 	constructor(value) {
 		if (value && !Array.isArray(value))
-			throw 'Initial value must be Array of ranges -- 2 digit length arrays';
+			throw "Initial value must be Array of ranges -- 2 digit length arrays";
 
 		if (value) value.forEach(x => this.validate(x));
 
@@ -75,7 +75,7 @@ module.exports = class Ranges {
 
 		// свернём последовательности в список диапазонов !!
 		seq.forEach((val, idx) => {
-			if (prevN > val) throw 'Sequence is not sorted properly.';
+			if (prevN > val) throw "Sequence is not sorted properly.";
 			if (!!idx && val > prevN + 1) {
 				acc.push([prevStart, prevN]);
 				prevStart = val;
@@ -95,7 +95,6 @@ module.exports = class Ranges {
 		const [rangeS, rangeE] = range;
 
 		if (!this.value.length || this.value[this.value.length - 1][1] < rangeS - 1) {
-
 			/**
 			 * List is empty or new Range is far enogh behind last value in the List,
 			 * i.e. they don't contact each other
@@ -109,7 +108,6 @@ module.exports = class Ranges {
 				const [currS, currE] = subsect;
 
 				if (currE < rangeS - 1) {
-
 					/**
 					 * subsection locates before new range and don't contact to it,
 					 * just save subrange
@@ -118,8 +116,11 @@ module.exports = class Ranges {
 				} else {
 					const lastAdded = acc[acc.length - 1] || [0, 0];
 					if (lastAdded[1] > rangeS) {
+						// new Range overlaps the earlier checked range
 						const isCurrentBehindRange = currS > rangeE + 1;
+						// just correct earlier range
 						acc[acc.length - 1][1] = isCurrentBehindRange ? rangeE : Math.max(currE, rangeE);
+						// new Range is not overlaps the current, we need to add it
 						if (isCurrentBehindRange) acc.push(subsect);
 					} else {
 						acc.push([Math.min(currS, rangeS), Math.max(currE, rangeE)]);
@@ -167,8 +168,8 @@ module.exports = class Ranges {
 		return this.value && this.value.length
 			? JSON.stringify(this.value)
 					.slice(1, -1)
-					.replace(/\],\[/g, '] [')
-					.replace(/(?<=\d), *(?=\d)/g, ', ')
-			: '<NULL LIST OF RANGES>';
+					.replace(/\],\[/g, "] [")
+					.replace(/(?<=\d), *(?=\d)/g, ", ")
+			: "<NULL LIST OF RANGES>";
 	}
 };
