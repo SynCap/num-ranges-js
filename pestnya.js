@@ -30,5 +30,5 @@ const clr = {
 /* eslint-disable no-console */
 module.exports = function(acn, obj, sbj) {
 	console.log(`${pfx}${acn ? clr.fCYN : clr.fRED}m`);
-	console.log(obj, `${pfx}${clr.fYLW}m`, sbj, `${pfx}${clr.RST}m`);
+	console.log(obj, `${pfx}${clr.fYLW}m${sbj}${pfx}${clr.RST}m`);
 };
