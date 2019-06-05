@@ -5,11 +5,11 @@
  * @Example of a Range      [1, 4] - includes integers: 1, 2, 3, and 4.
  * @Example of a Range List [[1, 4], [109, 206], [400, 600]]
  *
- * @method add      ( <Range> ): [Array] add Range to list and interssect it with existing
- * @method remove   ( <Range> ): [Array] exclude Range from the list, and "punch" ranges if needed
- * @method print    ( none    ): [Array] print stirng representation of list to the console
- * @method toString ( none    ): [String] convert range list to
- * @method validate ( <Range> ): [Boolean] validate Range to be correct for
+ * @method add      ( <Range> ): [Array]    add Range to list and interssect it with existing
+ * @method remove   ( <Range> ): [Array]    exclude Range from the list, and "punch" ranges if needed
+ * @method print    ( none    ): [Array]    print stirng representation of list to the console
+ * @method toString ( none    ): [String]   convert range list to
+ * @method validate ( <Range> ): [Boolean]  validate Range to be correct for
  *                               further use. Returns `true` on success, or throw exceptions othervise
  *
  * @property list : [Array] return whole list of ranges
