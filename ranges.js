@@ -116,8 +116,8 @@ module.exports = class Ranges {
 					 */
 					acc.push(subsect);
 				} else {
-					const [lastS, lastE] = acc[acc.length - 1] || [0, 0];
-					if (lastE > rangeS) {
+					const lastAdded = acc[acc.length - 1] || [0, 0];
+					if (lastAdded[1] > rangeS) {
 						const isCurrentBehindRange = currS > rangeE + 1;
 						acc[acc.length - 1][1] = isCurrentBehindRange ? rangeE : Math.max(currE, rangeE);
 						if (isCurrentBehindRange) acc.push(subsect);
