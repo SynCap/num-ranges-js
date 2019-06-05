@@ -1,9 +1,9 @@
 /**
+ *
  * Numeric ranges list manipulation class
  *
- * @license ICS
- * @author Constantin Losk, www.closk.design
- *
+ * @Example of a Range      [1, 4] - includes integers: 1, 2, 3, and 4.
+ * @Example of a Range List [[1, 4], [109, 206], [400, 600]]
  *
  * @method add      ( <Range> ): [Array] add Range to list and interssect it with existing
  * @method remove   ( <Range> ): [Array] exclude Range from the list, and "punch" ranges if needed
@@ -16,9 +16,6 @@
  *
  * @inner _compact_seq ( <Array> ): [Array[Array]] convert joined sequencies of Numbers into List of Ranges
  * @inner _get_seq     ( <Range> ): [Array]	expands Range to array of Numbers that Range represents
- *
- * @Example of a Range      [1, 4] - includes integers: 1, 2, 3, and 4.
- * @Example of a Range List [1, 4], [109, 206], [400, 600]
  */
 
 module.exports = class Ranges {
@@ -55,23 +52,12 @@ module.exports = class Ranges {
 	 * Needs to expand the particular range to series of number that range
 	 * present. That sequencies are used in later caulculations.
 	 *
-	 * Короче, полная победа опыта над разумом: нах математику, нах логику,
-	 * бум шпилить на алгоритмах!!
+	 * Короче, полная победа опыта над разумом: долой математику, долой логику!!
 	 * Однако, такой подход не лишён толики разумного: все манипуляции
 	 * делаются на оптимизированных внтри движков методах работы с данными.
 	 * Так что, еще вопрос -- будет ли проверка диапазонов на чистой логике
-	 * более производительна, чем этот Брут-фАрс
-	 *
-	 * Совершенно не удивлюсь, что содержимое 2х методов с подчёркиваним в
-	 * названиях, разсползуться по интернету в милионах копипастов, а в репе
-	 * будут торчать парочка звёздочек от коллег по опасному бизнесу.
-	 *
-	 * P.S. таки да, я специально выбрал самую короткую функцию, поставил её
-	 * пониже в файле, чтобы накатать самый длинный и бесполезный комментарий
-	 * на весь реп.
-	 *
-	 * P.P.S. И, йопт, ДА, я специально написал его по-русски!!! Гугла-Транслятор
-	 * в помощь!
+	 * более производительна, чем этот Брут-фАрс, который годится только для
+	 * относительно небольших чисел.
 	 *
 	 * @return [Array]
 	 */
