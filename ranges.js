@@ -21,7 +21,7 @@
 module.exports = class Ranges {
 	constructor(value) {
 		if (value && !Array.isArray(value))
-			throw "Initial value must be Array of ranges -- 2 digit length arrays";
+			throw 'Initial value must be Array of ranges -- 2 digit length arrays';
 
 		if (value) value.forEach(x => this.validate(x));
 
@@ -75,7 +75,7 @@ module.exports = class Ranges {
 
 		// свернём последовательности в список диапазонов !!
 		seq.forEach((val, idx) => {
-			if (prevN > val) throw "Sequence is not sorted properly.";
+			if (prevN > val) throw 'Sequence is not sorted properly.';
 			if (!!idx && val > prevN + 1) {
 				acc.push([prevStart, prevN]);
 				prevStart = val;
@@ -95,6 +95,7 @@ module.exports = class Ranges {
 		const [rangeS, rangeE] = range;
 
 		if (!this.value.length || this.value[this.value.length - 1][1] < rangeS - 1) {
+
 			/**
 			 * List is empty or new Range is far enogh behind last value in the List,
 			 * i.e. they don't contact each other
@@ -108,14 +109,15 @@ module.exports = class Ranges {
 				const [currS, currE] = subsect;
 
 				if (currE < rangeS - 1) {
+
 					/**
 					 * subsection locates before new range and don't contact to it,
 					 * just save subrange
 					 */
 					acc.push(subsect);
 				} else {
-					const lastAdded = acc[acc.length - 1] || [0, 0];
-					if (lastAdded[1] > rangeS) {
+					const prevAdded = acc[acc.length - 1] || [0, 0];
+					if (prevAdded[1] > rangeS) {
 						// new Range overlaps the earlier checked range
 						const isCurrentBehindRange = currS > rangeE + 1;
 						// just correct earlier range
@@ -139,14 +141,38 @@ module.exports = class Ranges {
 	 */
 	remove(range) {
 		this.validate(range);
-		var tmpSet = new Set();
-		this.value.forEach(subrange => {
-			tmpSet = new Set([...tmpSet, ...this._get_seq(subrange)]);
-		});
 
-		return (this.value = this._compact_seq(
-			new Uint32Array(tmpSet).filter(x => x < range[0] || x > range[1])
-		));
+		if (
+			!this.value.length || // subtract from empty list? really?
+			this.value[0][0] > range[1] + 1 || // subtract ahead of list
+			this.value[this.value.length - 1][1] < range[0] - 1 // subtract behind the list
+		)
+			return [];
+		const [rangeS, rangeE] = range;
+
+		this.value = this.value.reduce((acc, subsect) => {
+			const [currS, currE] = subsect;
+
+			if (currE < rangeS || currS > rangeE) {
+				// current and punching Ranges are not overlaps, we just save the current
+				acc.push(subsect);
+			} else {
+				const lastAdded = acc[acc.length - 1];
+				if (currS < rangeS && currE > rangeE) {
+					// punching Range brake this section to two
+					acc.push([currS, rangeS], [rangeE, currS]);
+				} else if (rangeS > currS || currE > rangeE) {
+					// punching range not inside the current subrange, but cuts some slice
+					// only one edge of cutting Range inside current subrange
+					acc.push([Math.max(currS, rangeS), Math.min(currE, rangeE)]);
+				}
+				// punching Range covers current subrange, we haven't to do something
+			}
+
+			return acc;
+		}, []);
+
+		return this.value;
 	}
 
 	/**
@@ -168,8 +194,8 @@ module.exports = class Ranges {
 		return this.value && this.value.length
 			? JSON.stringify(this.value)
 					.slice(1, -1)
-					.replace(/\],\[/g, "] [")
-					.replace(/(?<=\d), *(?=\d)/g, ", ")
-			: "<NULL LIST OF RANGES>";
+					.replace(/\],\[/g, '] [')
+					.replace(/(?<=\d), *(?=\d)/g, ', ')
+			: '<NULL LIST OF RANGES>';
 	}
 };
