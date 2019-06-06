@@ -124,7 +124,7 @@ module.exports = class Ranges {
 					/**
 					 * new Range is cover the current subsection and yet not added
 					 */
-					acc.push(range);
+					acc.push([...range]);
 				} else if (prevAdded[1] > rangeS) {
 					// new Range overlaps the earlier checked range
 					const isCurrentBehindRange = currS > rangeE + 1;
