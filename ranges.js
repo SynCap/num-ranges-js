@@ -94,10 +94,14 @@ module.exports = class Ranges {
 		this.validate(range);
 		const [rangeS, rangeE] = range;
 
-		if (!this.value.length || this.value[this.value.length - 1][1] < rangeS - 1) {
+		if (
+			!this.value.length ||
+			this.value[this.value.length - 1][1] < rangeS - 1 ||
+			this.value[0] > rangeE + 1
+		) {
 
 			/**
-			 * List is empty or new Range is far enogh behind last value in the List,
+			 * List is empty or new Range is far enogh behind last value in the List or before first,
 			 * i.e. they don't contact each other
 			 *
 			 * @Example of contacted Ranges: [1,5] and [5,9], this Ranges
