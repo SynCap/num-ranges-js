@@ -102,7 +102,7 @@ module.exports = class Ranges {
 			 * @Example of contacted Ranges: [1,5] and [5,9], this Ranges
 			 * must be joined to one range [1,9], see below
 			 */
-			this.value.push(range);
+			this.value.push([...range]);
 		} else {
 			this.value = this.value.reduce((acc, subsect) => {
 				const [currS, currE] = subsect;
