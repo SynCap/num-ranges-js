@@ -62,6 +62,5 @@ r.print();
 // Should display: [1, 2] [20, 21]
 
 spoyom(true, 'ADD', '[17 … 1000000000]', '[1, 2] [17, 1000000000]');
-r.remove([17, 1000000000]);
+r.add([17, 1000000000]);
 r.print();
-// Should display: [1, 2] [20, 21]
