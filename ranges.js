@@ -156,17 +156,19 @@ module.exports = class Ranges {
 			if (currE < rangeS || currS > rangeE) {
 				// current and punching Ranges are not overlaps, we just save the current
 				acc.push(subsect);
-			} else {
-				const lastAdded = acc[acc.length - 1];
+			} else if (!(rangeS <= currS && rangeE >= currE)) {
+				// punching Range don't covers current subrange, so we have to do something
+
 				if (currS < rangeS && currE > rangeE) {
-					// punching Range brake this section to two
-					acc.push([currS, rangeS], [rangeE, currS]);
-				} else if (rangeS > currS || currE > rangeE) {
-					// punching range not inside the current subrange, but cuts some slice
-					// only one edge of cutting Range inside current subrange
-					acc.push([Math.max(currS, rangeS), Math.min(currE, rangeE)]);
+					// the punching Range brakes down this section to the two new ones
+					acc.push([currS, rangeS - 1], [rangeE + 1, currE]);
+				} else if (rangeS <= currE && rangeE >= currE) {
+					// punching range not inside the current subrange, but cuts the tail of current range
+					acc.push([currS, rangeS - 1]);
+				} else if (rangeE <= currE && rangeE >= currS) {
+					// punching range not inside the current subrange, but cuts the head of current subrange
+					acc.push([rangeE + 1, currE]);
 				}
-				// punching Range covers current subrange, we haven't to do something
 			}
 
 			return acc;
