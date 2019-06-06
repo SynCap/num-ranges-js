@@ -9,8 +9,8 @@
  * @method remove   ( <Range> ): [Array]    exclude Range from the list, and "punch" ranges if needed
  * @method print    ( none    ): [Array]    print stirng representation of list to the console
  * @method toString ( none    ): [String]   convert range list to
- * @method validate ( <Range> ): [Boolean]  validate Range to be correct for
- *                               further use. Returns `true` on success, or throw exceptions othervise
+ * @method validate ( <Range> ): [Range]  validate Range to be correct for
+ *                               further use. Returns asc ordered Uint32Array of 2 Numbers on success, or throw exceptions othervise
  *
  * @property list : [Array] return whole list of ranges
  *
@@ -39,12 +39,7 @@ module.exports = class Ranges {
 			typeof element1: ${typeof range[0]}
 			typeof element2: ${typeof range[1]}`;
 
-		if (range[0] > range[1])
-			throw `First element of Range can't be greater than second.
-			Element1: ${range[0]}
-            Element2: ${range[1]}`;
-
-		return true;
+		return new Uint32Array([...range]).sort();
 	}
 
 	/**
@@ -91,7 +86,7 @@ module.exports = class Ranges {
 	 * Adds a range to the list
 	 */
 	add(range) {
-		this.validate(range);
+		range = this.validate(range);
 		const [rangeS, rangeE] = range;
 
 		if (
@@ -152,7 +147,7 @@ module.exports = class Ranges {
 	 * Removes a range from the list
 	 */
 	remove(range) {
-		this.validate(range);
+		range = this.validate(range);
 
 		if (
 			!this.value.length || // subtract from empty list? really?
