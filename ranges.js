@@ -107,26 +107,34 @@ module.exports = class Ranges {
 		} else {
 			this.value = this.value.reduce((acc, subsect) => {
 				const [currS, currE] = subsect;
+				const prevAdded = acc[acc.length - 1] || [0, 0];
 
 				if (currE < rangeS - 1) {
 
 					/**
-					 * subsection locates before new range and don't contact to it,
-					 * just save subrange
+					 * subsection locates before new range and don't contact to it, just save subrange
 					 */
 					acc.push(subsect);
+				} else if (
+					rangeS <= currS &&
+					rangeE >= currE &&
+					prevAdded[0] !== rangeS &&
+					prevAdded[1] !== rangeE
+				) {
+
+					/**
+					 * new Range is cover the current subsection and yet not added
+					 */
+					acc.push(range);
+				} else if (prevAdded[1] > rangeS) {
+					// new Range overlaps the earlier checked range
+					const isCurrentBehindRange = currS > rangeE + 1;
+					// just correct earlier range
+					acc[acc.length - 1][1] = isCurrentBehindRange ? rangeE : Math.max(currE, rangeE);
+					// new Range is not overlaps the current, we need to add it
+					if (isCurrentBehindRange) acc.push(subsect);
 				} else {
-					const prevAdded = acc[acc.length - 1] || [0, 0];
-					if (prevAdded[1] > rangeS) {
-						// new Range overlaps the earlier checked range
-						const isCurrentBehindRange = currS > rangeE + 1;
-						// just correct earlier range
-						acc[acc.length - 1][1] = isCurrentBehindRange ? rangeE : Math.max(currE, rangeE);
-						// new Range is not overlaps the current, we need to add it
-						if (isCurrentBehindRange) acc.push(subsect);
-					} else {
-						acc.push([Math.min(currS, rangeS), Math.max(currE, rangeE)]);
-					}
+					acc.push([Math.min(currS, rangeS), Math.max(currE, rangeE)]);
 				}
 
 				return acc;
